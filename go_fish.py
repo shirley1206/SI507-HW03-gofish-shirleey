@@ -167,10 +167,10 @@ def play_war_game(testing=False):
             print("Player1's current cards:")
             for card in player1.cards:
                 print(card)
-            player1_card = input("Player 1, please choose a card: (e.g. Ace of Diamonds):")
+            player1_card = input("Player 1, please choose a card: (e.g. Ace of Diamonds):") 
             if player1.remove_card(player1_card):
                 print("===========Player1 selected a card===========")
-                break
+                break    
             else:
                 print("You don't have this card, try again.")
 
@@ -186,15 +186,33 @@ def play_war_game(testing=False):
                 print("You don't have this card, try again.")
 
 
-        print('p1 rank_num=', player1_card.rank_num, 'p1 rank_num=', player2_card.rank_num)
+        # print('p1 rank_num=', player1_card, 'p1 rank_num=', player2_card)
         if not testing:
             print("Player 1 plays", player1_card, "& Player 2 plays", player2_card)
+            compare1=player1_card.split()
+            compare2=player2_card.split()
+            if compare1[0]=="Ace":
+                compare1[0]=="1"
+            if compare1[0]=="Jack":
+                compare1[0]=="11" 
+            if compare1[0]=="Queen":
+                compare1[0]=="12"
+            if compare1[0]=="King":
+                compare1[0]=="13" 
+            if compare2[0]=="Ace":
+                compare2[0]=="1"
+            if compare2[0]=="Jack":
+                compare2[0]=="11" 
+            if compare2[0]=="Queen":
+                compare2[0]=="12"
+            if compare2[0]=="King":
+                compare2[0]=="13"              
 
-            if player1_card.rank_num > player2_card.rank_num:
+            if int(compare1[0]) > int(compare2[0]):
                 if not testing:
                     print("Player 1 wins a point!")
                 p1_score += 1
-            elif player1_card.rank_num < player2_card.rank_num:
+            elif int(compare1[0])< int(compare2[0]):
                 if not testing:
                     print("Player 2 wins a point!")
                 p2_score += 1
