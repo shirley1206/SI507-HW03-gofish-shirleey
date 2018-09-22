@@ -27,23 +27,18 @@ def play_war_game(testing=False):
 	    	if player2.remove_card(player2_card):
 	    		break
 
-	    
-	    print('p1 rank_num=', player1_card.rank_num, 'p1 rank_num=', player2_card.rank_num)
-	    if not testing:
-	        print("Player 1 plays", player1_card, "& Player 2 plays", player2_card)
+	    if not testing:    
+	    # print('p1 rank_num=', player1_card.rank_num, 'p1 rank_num=', player2_card.rank_num)
+                print("Player 1 plays", player1_card, "& Player 2 plays", player2_card)
 
-	        if player1_card.rank_num > player2_card.rank_num:
-
-	            if not testing:
-	                print("Player 1 wins a point!")
-	            p1_score += 1
-	        elif player1_card.rank_num < player2_card.rank_num:
-	            if not testing:
-	                print("Player 2 wins a point!")
-	            p2_score += 1
-	        else:
-	            if not testing:
-	                print("Tie. Next turn.")
+	       if player1_card.rank_num > player2_card.rank_num:
+                print("Player 1 wins a point!")
+	               p1_score += 1
+	       elif player1_card.rank_num < player2_card.rank_num:
+	           print("Player 2 wins a point!")
+	               p2_score += 1
+	       else:
+	           print("Tie. Next turn.")
 
 
     if p1_score > p2_score:
