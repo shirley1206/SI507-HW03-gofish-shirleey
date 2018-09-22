@@ -189,25 +189,8 @@ def play_war_game(testing=False):
         # print('p1 rank_num=', player1_card, 'p1 rank_num=', player2_card)
         if not testing:
             print("Player 1 plays", player1_card, "& Player 2 plays", player2_card)
-            compare1=player1_card.split()
-            compare2=player2_card.split()
-            if compare1[0]=="Ace":
-                compare1[0]=="1"
-            if compare1[0]=="Jack":
-                compare1[0]=="11" 
-            if compare1[0]=="Queen":
-                compare1[0]=="12"
-            if compare1[0]=="King":
-                compare1[0]=="13" 
-            if compare2[0]=="Ace":
-                compare2[0]=="1"
-            if compare2[0]=="Jack":
-                compare2[0]=="11" 
-            if compare2[0]=="Queen":
-                compare2[0]=="12"
-            if compare2[0]=="King":
-                compare2[0]=="13"              
-
+            compare1=player1_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
+            compare2=player2_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
             if int(compare1[0]) > int(compare2[0]):
                 if not testing:
                     print("Player 1 wins a point!")
