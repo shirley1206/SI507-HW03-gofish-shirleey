@@ -1,4 +1,5 @@
-import random
+import random 
+from random import randint
 
 class Card(object):
     suit_names =  ["Diamonds","Clubs","Hearts","Spades"]
@@ -148,14 +149,34 @@ def play_war_game(testing=False):
     # Call this with testing = True and it won't print out all the game stuff -- makes it hard to see test results
     deck = Deck()
     deck.shuffle()
-    player_hands = deck.deal(2)
-    #start a two player game
+    total_hands =input("Please choose a number of computer players(between 2-4)")
+    player_hands = deck.deal(int(total_hands))
+
+#start a 2-4 player game
+    
 
     p1_score = 0
     p2_score = 0
-    player1 = player_hands[0]
-    player2 = player_hands[1]
+    p3_score = 0
+    p4_score = 0
 
+#Initialize players and hands based on player number input
+
+    if total_hands=="2":
+    	player1 = player_hands[0]
+    	player2 = player_hands[1]
+    elif total_hands="3":
+    	player1 = player_hands[0]
+    	player2 = player_hands[1]
+    	player3 = player_hands[2]
+    else:	
+    	player1 = player_hands[0]
+    	player2 = player_hands[1]
+    	player3 = player_hands[2]
+    	player4 = player_hands[3]
+
+
+#Start game
 
     if not testing:
         print("\n*** BEGIN THE GAME ***\n")
@@ -163,45 +184,75 @@ def play_war_game(testing=False):
 
     for play_round in range(7):
         print("Round: " + str(play_round + 1))
+
         while True:
             print("Player1's current cards:")
             for card in player1.cards:
                 print(card)
-            player1_card = input("Player 1, please choose a card: (e.g. Ace of Diamonds):") 
+            player1_card = str(random.choice(player1.cards))
             if player1.remove_card(player1_card):
                 print("===========Player1 selected a card===========")
-                break    
-            else:
-                print("You don't have this card, try again.")
+            compare1=player1_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
+            break    
+            # else:
+            #     print("You don't have this card, try again.")
 
         while True:
             print("Player2's current cards:")
             for card in player2.cards:
                 print(card)
-            player2_card = input("Player 2, please choose a card: (e.g. Ace of Diamonds):")
+            player2_card = str(random.choice(player2.cards))
             if player2.remove_card(player2_card):
                 print("===========Player2 selected a card===========")
-                break
-            else:
-                print("You don't have this card, try again.")
+            compare2=player2_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
+            break
+            # else:
+            #     print("You don't have this card, try again.")
+
+
+        while "2"<total_hands<="4":
+            print("Player3's current cards:")
+            for card in player3.cards:
+                print(card)
+            player3_card = str(random.choice(player3.cards))
+            if player3.remove_card(player3_card):
+                print("===========Player3 selected a card===========")
+            compare3=player3_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
+            break    
+
+        while total_hands=="4":
+            print("Player4's current cards:")
+            for card in player4.cards:
+                print(card)
+            player4_card = str(random.choice(player4.cards))
+            if player4.remove_card(player4_card):
+                print("===========Player4 selected a card===========")
+            compare4=player4_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
+            break         
 
 
         # print('p1 rank_num=', player1_card, 'p1 rank_num=', player2_card)
-        if not testing:
+        while total_hands=="2":
             print("Player 1 plays", player1_card, "& Player 2 plays", player2_card)
-            compare1=player1_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
-            compare2=player2_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
             if int(compare1[0]) > int(compare2[0]):
-                if not testing:
-                    print("Player 1 wins a point!")
-                p1_score += 1
+            	print("Player 1 wins a point!")
+            	p1_score += 1
             elif int(compare1[0])< int(compare2[0]):
-                if not testing:
-                    print("Player 2 wins a point!")
-                p2_score += 1
+            	print("Player 2 wins a point!")
+            	p2_score += 1
             else:
-                if not testing:
-                    print("Tie. Next turn.")
+            	print("Tie. Next turn.")
+            break	
+
+        while total_hands=="3":
+        	print("Player 1 plays", player1_card, ",Player 2 plays", player2_card, ",Player 3 plays", player3_card)
+
+        while total_hands=="4":	
+        	print("Player 1 plays", player1_card, ",Player 2 plays", player2_card, ",Player 3 plays", player3_card, ",Player 4 plays", player4_card)
+        
+
+
+			
 
 
     if p1_score > p2_score:
