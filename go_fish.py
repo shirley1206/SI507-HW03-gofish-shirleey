@@ -1,21 +1,23 @@
-import random 
+import random
 from random import randint
 
-class Card(object):
-    suit_names =  ["Diamonds","Clubs","Hearts","Spades"]
-    rank_levels = [1,2,3,4,5,6,7,8,9,10,11,12,13]
-    faces = {1:"Ace",11:"Jack",12:"Queen",13:"King"}
 
-    def __init__(self, suit=0,rank=2):
+class Card(object):
+    suit_names = ["Diamonds", "Clubs", "Hearts", "Spades"]
+    rank_levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    faces = {1: "Ace", 11: "Jack", 12: "Queen", 13: "King"}
+
+    def __init__(self, suit=0, rank=2):
         self.suit = self.suit_names[suit]
-        if rank in self.faces: # self.rank handles printed representation
+        if rank in self.faces:  # self.rank handles printed representation
             self.rank = self.faces[rank]
         else:
             self.rank = rank
-        self.rank_num = rank # To handle winning comparison
+        self.rank_num = rank  # To handle winning comparison
 
     def __str__(self):
-        return "{} of {}".format(self.rank,self.suit)
+        return "{} of {}".format(self.rank, self.suit)
+
 
 class Deck(object):
     def __init__(self):  # Don't need any input to create a deck of cards
@@ -57,11 +59,11 @@ class Deck(object):
                 card = Card(suit, rank)
                 self.cards.append(card)
 
-
-    def deal(self, total_hands, cards_per_hand=7):
+    def deal(self, total_hands, deck):
         player_hand = []
         return_hands = []
         deck = Deck()
+        cards_per_hand = 7
 
         if cards_per_hand != -1:
             for i in range(total_hands):
@@ -69,19 +71,18 @@ class Deck(object):
                     card = deck.pop_card()
                     player_hand.append(card)
                 return_hands.append(Hand(player_hand))
-                player_hand = [] # reinitialize cards on hand for next player
+                player_hand = []  # reinitialize cards on hand for next player
         else:
-            all_card_per_hand = round(len(deck.cards)/total_hands)
+            all_card_per_hand = round(len(deck.cards) / total_hands)
             for i in range(total_hands):
                 for j in range(all_card_per_hand):
                     card = deck.pop_card()
                     player_hand.append(card)
                 return_hands.append(Hand(player_hand))
                 # print(len(Hand(player_hand).cards))
-                player_hand = [] # reinitialize cards on hand for next player
+                player_hand = []  # reinitialize cards on hand for next player
 
         return return_hands
-
 
 
 class Hand(object):
@@ -91,7 +92,6 @@ class Hand(object):
         self.cards = []
         for card in init_cards:
             self.cards.append(card)
-
 
     # add a card to the hand
     # silently fails if the card is already in the hand
@@ -130,7 +130,6 @@ class Hand(object):
         drawn_card = deck.pop_card()
         self.add_card(drawn_card)
 
-
     def remove_pairs(self):
         new_list = []
 
@@ -142,45 +141,44 @@ class Hand(object):
             else:
                 new_list.append(c)
 
-
         self.cards = new_list
+
 
 def play_war_game(testing=False):
     # Call this with testing = True and it won't print out all the game stuff -- makes it hard to see test results
     deck = Deck()
     deck.shuffle()
-    total_hands =input("Please choose a number of computer players(between 2-4)")
-    player_hands = deck.deal(int(total_hands))
+    total_hands = input("Please choose a number of computer players(between 2-4)")
+    player_hands = deck.deal(total_hands=int(total_hands), deck=deck)
 
-#start a 2-4 player game
-    
+    # start a 2-4 player game
+
 
     p1_score = 0
     p2_score = 0
     p3_score = 0
     p4_score = 0
 
-#Initialize players and hands based on player number input
+    # Initialize players and hands based on player number input
 
-    if total_hands=="2":
-    	player1 = player_hands[0]
-    	player2 = player_hands[1]
-    elif total_hands=="3":
-    	player1 = player_hands[0]
-    	player2 = player_hands[1]
-    	player3 = player_hands[2]
-    else:	
-    	player1 = player_hands[0]
-    	player2 = player_hands[1]
-    	player3 = player_hands[2]
-    	player4 = player_hands[3]
+    if total_hands == "2":
+        player1 = player_hands[0]
+        player2 = player_hands[1]
+    elif total_hands == "3":
+        player1 = player_hands[0]
+        player2 = player_hands[1]
+        player3 = player_hands[2]
+    else:
+        player1 = player_hands[0]
+        player2 = player_hands[1]
+        player3 = player_hands[2]
+        player4 = player_hands[3]
 
 
-#Start game
+    # Start game
 
     if not testing:
         print("\n*** BEGIN THE GAME ***\n")
-
 
     for play_round in range(7):
         print("Round: " + str(play_round + 1))
@@ -192,8 +190,9 @@ def play_war_game(testing=False):
             player1_card = str(random.choice(player1.cards))
             if player1.remove_card(player1_card):
                 print("===========Player1 selected a card===========")
-            compare1=player1_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
-            break    
+            compare1 = player1_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King",
+                                                                                                             "13").split()
+            break
             # else:
             #     print("You don't have this card, try again.")
 
@@ -204,86 +203,89 @@ def play_war_game(testing=False):
             player2_card = str(random.choice(player2.cards))
             if player2.remove_card(player2_card):
                 print("===========Player2 selected a card===========")
-            compare2=player2_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
+            compare2 = player2_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King",
+                                                                                                             "13").split()
             break
             # else:
             #     print("You don't have this card, try again.")
 
-
-        while "2"<total_hands<="4":
+        while "2" < total_hands <= "4":
             print("Player3's current cards:")
             for card in player3.cards:
                 print(card)
             player3_card = str(random.choice(player3.cards))
             if player3.remove_card(player3_card):
                 print("===========Player3 selected a card===========")
-            compare3=player3_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
-            break   
+            compare3 = player3_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King",
+                                                                                                             "13").split()
+            break
 
-#Round result
-        while total_hands=="4":
+        # Round result
+        while total_hands == "4":
             print("Player4's current cards:")
             for card in player4.cards:
                 print(card)
             player4_card = str(random.choice(player4.cards))
             if player4.remove_card(player4_card):
                 print("===========Player4 selected a card===========")
-            compare4=player4_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
+            compare4 = player4_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King",
+                                                                                                             "13").split()
             break
 
-        if total_hands=="2":    
-            table=[]
+        if total_hands == "2":
+            table = []
             table.append(int(compare1[0]))
             table.append(int(compare2[0]))
             print("Player 1 plays", player1_card, ",Player 2 plays", player2_card)
-            if max(table)==int(compare1[0]):
+            if max(table) == int(compare1[0]):
                 print("player1 wins a point!")
-                p1_score += 1    
-            elif max(table)==int(compare2[0]):
+                p1_score += 1
+            elif max(table) == int(compare2[0]):
                 print("player2 wins a point!")
-                p2_score += 1 
+                p2_score += 1
             else:
-                print("Tie! Next turn.")    
+                print("Tie! Next turn.")
 
-        elif total_hands=="3":
-            table=[]
+        elif total_hands == "3":
+            table = []
             table.append(int(compare1[0]))
             table.append(int(compare2[0]))
             table.append(int(compare3[0]))
             print("Player 1 plays", player1_card, ",Player 2 plays", player2_card, ",Player 3 plays", player3_card)
-            if max(table)==int(compare1[0]):
+            if max(table) == int(compare1[0]):
                 print("player1 wins a point!")
-                p1_score += 1    
-            elif max(table)==int(compare2[0]):
+                p1_score += 1
+            elif max(table) == int(compare2[0]):
                 print("player2 wins a point!")
-                p2_score += 1 
-            elif max(table)==int(compare3[0]):
+                p2_score += 1
+            elif max(table) == int(compare3[0]):
                 print("player3 wins a point!")
-                p3_score += 1    
+                p3_score += 1
             else:
-                print("Tie! Next turn.")    
+                print("Tie! Next turn.")
 
         else:
-            table=[]
+            table = []
             table.append(int(compare1[0]))
             table.append(int(compare2[0]))
             table.append(int(compare3[0]))
             table.append(int(compare4[0]))
-            print("Player 1 plays", player1_card, ",Player 2 plays", player2_card, ",Player 3 plays", player3_card, ",Player 4 plays", player4_card)
-            if max(table)==int(compare1[0]):
+            print("Player 1 plays", player1_card, ",Player 2 plays", player2_card, ",Player 3 plays", player3_card,
+                  ",Player 4 plays", player4_card)
+            if max(table) == int(compare1[0]):
                 print("player1 wins a point!")
-                p1_score += 1    
-            elif max(table)==int(compare2[0]):
+                p1_score += 1
+            elif max(table) == int(compare2[0]):
                 print("player2 wins a point!")
-                p2_score += 1 
-            elif max(table)==int(compare3[0]):
+                p2_score += 1
+            elif max(table) == int(compare3[0]):
                 print("player3 wins a point!")
-                p3_score += 1 
-            elif max(table)==int(compare4[0]):
+                p3_score += 1
+            elif max(table) == int(compare4[0]):
                 print("player4 wins a point!")
-                p4_score += 1        
+                p4_score += 1
             else:
-                print("Tie! Next turn.") 
+                print("Tie! Next turn.")
 
 
 if __name__ == "__main__":
