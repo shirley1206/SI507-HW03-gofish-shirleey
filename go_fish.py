@@ -57,10 +57,10 @@ class Deck(object):
                 self.cards.append(card)
 
 
-    def deal(self, total_hands, cards_per_hand=7):
+    def deal(self, deck, total_hands=2):
         player_hand = []
         return_hands = []
-        deck = Deck()
+        cards_per_hand = 7
 
         if cards_per_hand != -1:
             for i in range(total_hands):
@@ -148,7 +148,7 @@ def play_war_game(testing=False):
     # Call this with testing = True and it won't print out all the game stuff -- makes it hard to see test results
     deck = Deck()
     deck.shuffle()
-    player_hands = deck.deal(2)
+    player_hands = deck.deal(total_hands=2, deck=deck)
     #start a two player game
 
     p1_score = 0
