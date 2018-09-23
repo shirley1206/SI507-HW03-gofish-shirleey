@@ -165,7 +165,7 @@ def play_war_game(testing=False):
     if total_hands=="2":
     	player1 = player_hands[0]
     	player2 = player_hands[1]
-    elif total_hands="3":
+    elif total_hands=="3":
     	player1 = player_hands[0]
     	player2 = player_hands[1]
     	player3 = player_hands[2]
@@ -218,8 +218,9 @@ def play_war_game(testing=False):
             if player3.remove_card(player3_card):
                 print("===========Player3 selected a card===========")
             compare3=player3_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
-            break    
+            break   
 
+#Round result
         while total_hands=="4":
             print("Player4's current cards:")
             for card in player4.cards:
@@ -228,45 +229,67 @@ def play_war_game(testing=False):
             if player4.remove_card(player4_card):
                 print("===========Player4 selected a card===========")
             compare4=player4_card.replace("Ace", "1").replace("Jack", "11").replace("Queen", "12").replace("King", "13").split()
-            break         
+            break
 
-
-        # print('p1 rank_num=', player1_card, 'p1 rank_num=', player2_card)
-        while total_hands=="2":
-            print("Player 1 plays", player1_card, "& Player 2 plays", player2_card)
-            if int(compare1[0]) > int(compare2[0]):
-            	print("Player 1 wins a point!")
-            	p1_score += 1
-            elif int(compare1[0])< int(compare2[0]):
-            	print("Player 2 wins a point!")
-            	p2_score += 1
+        if total_hands=="2":    
+            table=[]
+            table.append(int(compare1[0]))
+            table.append(int(compare2[0]))
+            print("Player 1 plays", player1_card, ",Player 2 plays", player2_card)
+            if max(table)==int(compare1[0]):
+                print("player1 wins a point!")
+                p1_score += 1    
+            elif max(table)==int(compare2[0]):
+                print("player2 wins a point!")
+                p2_score += 1 
             else:
-            	print("Tie. Next turn.")
-            break	
+                print("Tie! Next turn.")    
 
-        while total_hands=="3":
-        	print("Player 1 plays", player1_card, ",Player 2 plays", player2_card, ",Player 3 plays", player3_card)
+        elif total_hands=="3":
+            table=[]
+            table.append(int(compare1[0]))
+            table.append(int(compare2[0]))
+            table.append(int(compare3[0]))
+            print("Player 1 plays", player1_card, ",Player 2 plays", player2_card, ",Player 3 plays", player3_card)
+            if max(table)==int(compare1[0]):
+                print("player1 wins a point!")
+                p1_score += 1    
+            elif max(table)==int(compare2[0]):
+                print("player2 wins a point!")
+                p2_score += 1 
+            elif max(table)==int(compare3[0]):
+                print("player3 wins a point!")
+                p3_score += 1    
+            else:
+                print("Tie! Next turn.")    
 
-        while total_hands=="4":	
-        	print("Player 1 plays", player1_card, ",Player 2 plays", player2_card, ",Player 3 plays", player3_card, ",Player 4 plays", player4_card)
-        
-
-
-			
-
-
-    if p1_score > p2_score:
-        return "Player1", p1_score, p2_score
-    elif p2_score > p1_score:
-        return "Player2", p1_score, p2_score
-    else:
-        return "Tie", p1_score, p2_score
+        else:
+            table=[]
+            table.append(int(compare1[0]))
+            table.append(int(compare2[0]))
+            table.append(int(compare3[0]))
+            table.append(int(compare4[0]))
+            print("Player 1 plays", player1_card, ",Player 2 plays", player2_card, ",Player 3 plays", player3_card, ",Player 4 plays", player4_card)
+            if max(table)==int(compare1[0]):
+                print("player1 wins a point!")
+                p1_score += 1    
+            elif max(table)==int(compare2[0]):
+                print("player2 wins a point!")
+                p2_score += 1 
+            elif max(table)==int(compare3[0]):
+                print("player3 wins a point!")
+                p3_score += 1 
+            elif max(table)==int(compare4[0]):
+                print("player4 wins a point!")
+                p4_score += 1        
+            else:
+                print("Tie! Next turn.") 
 
 
 if __name__ == "__main__":
     result = play_war_game()
-    print("""\n\n******\nTOTAL SCORES:\nPlayer 1: {}\nPlayer 2: {}\n\n""".format(result[1], result[2]))
-    if result[0] != "Tie":
-        print(result[0], "wins")
-    else:
-        print("TIE!")
+    # print("""\n\n******\nTOTAL SCORES:\nPlayer 1: {}\nPlayer 2: {}\n\n""".format(result[1], result[2]))
+    # if result[0] != "Tie":
+    #     print(result[0], "wins")
+    # else:
+    #     print("TIE!")
